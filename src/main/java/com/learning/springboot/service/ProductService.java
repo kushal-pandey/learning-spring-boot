@@ -3,7 +3,9 @@ package com.learning.springboot.service;
 import com.learning.springboot.Repository.ProductRepository;
 import com.learning.springboot.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,9 +39,8 @@ public class ProductService {
     }
 
     public void deleteProduct(Long id){
-        Product product = productRepository.findById(id).orElseThrow(()-> new RuntimeException("Product Not Found"));
+        Product product = productRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Not Found"));
         productRepository.delete(product);
     }
-
 
 }
